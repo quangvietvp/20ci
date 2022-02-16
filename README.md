@@ -1,7 +1,7 @@
 # Installation instruction
 
 ## Clone source code
-- **[Source code](http://github.com)**
+- **[Source code](https://github.com/quangvietvp/20ci.git)**
 ## Running with Docker
 Install Docker following this instruction
 - **[Install](https://docs.docker.com/engine/install/)**
