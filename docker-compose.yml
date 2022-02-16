@@ -1,0 +1,38 @@
+version: '3'
+services:
+  web:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+      args:
+        targetenv: local
+    ports:
+      - "8030:80"
+    depends_on:
+        - mysql
+    environment:
+        # these environment variables will be available inside your container
+        - DB_USERNAME="home"
+        - DB_PASSWORD="home"
+        - DB_HOST="mysql"
+        - DB_NAME="20ci"
+        - DB_PORT="3306"  # this should always be 3306, the container port, as it will connect on a local network
+    container_name: "web_20ci"
+  mysql:
+    image: mysql:5.7
+    container_name: "mysql_20ci"
+    hostname: "mysql"
+    environment:
+      # these are expected by the container image
+      - MYSQL_ROOT_PASSWORD=home
+      - MYSQL_DATABASE=20ci
+      - MYSQL_USER=home
+      - MYSQL_PASSWORD=home
+    volumes:
+      - ./databases/20ci.sql:/docker-entrypoint-initdb.d/test_db.sql
+      - ./data:/var/lib/mysql
+    ports:
+      #format is "localport:containerport"
+      # feel free to change the localport to anything you wish,
+      # just remember what you set it to when you connect
+      - "3306:3306"
